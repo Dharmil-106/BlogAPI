@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.routes.js';
+import postsRoutes from './routes/posts.routes.js';
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/posts',postsRoutes)
 
 export default app;
