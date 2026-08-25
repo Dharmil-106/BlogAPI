@@ -32,7 +32,8 @@
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .dashboard-table {
@@ -141,4 +142,26 @@
 .btn-action.text-danger:hover {
   color: var(--danger);
   background-color: rgba(248, 113, 113, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .dashboard-table th, .dashboard-table td {
+    padding: var(--space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .actions-cell {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .status-badge {
+    font-size: 0.6rem;
+  }
 }

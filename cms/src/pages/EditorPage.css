@@ -140,3 +140,29 @@
   display: flex;
   flex-direction: column;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .editor-title-input {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .editor-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  .banner-upload-box {
+    padding: var(--space-lg);
+  }
+}
