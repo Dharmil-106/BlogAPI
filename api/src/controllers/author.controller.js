@@ -5,7 +5,11 @@ export async function getProfile(req, res) {
         const profile = await authorService.getAuthorProfile();
         res.status(200).json(profile);
     } catch (err) {
-        res.status(404).json({ error: err.message });
+        if (err.message === "Author profile not found") {
+            res.status(404).json({ error: err.message });
+        } else {
+            res.status(500).json({ error: "Database timeout/error: " + err.message });
+        }
     }
 }
 

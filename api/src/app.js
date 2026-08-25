@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.routes.js';
 import postsRoutes from './routes/posts.routes.js';
 import commentsRoutes from './routes/comments.routes.js';
 import authorRoutes from './routes/author.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use('/auth', authRoutes);
 app.use('/comments',commentsRoutes);
 app.use('/posts', postsRoutes);
 app.use('/author', authorRoutes);
+app.use('/upload', uploadRoutes)
 
 export default app;

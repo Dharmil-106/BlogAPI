@@ -1,6 +1,6 @@
 import * as commentsService from '../services/comments.service.js';
 
-export async function getAllComments(req, res) {
+export async function getPostComments(req, res) {
     try {
         const { postId } = req.params;
         const comments = await commentsService.getCommentsForPost(postId);
@@ -11,6 +11,15 @@ export async function getAllComments(req, res) {
     }
 }
 
+export async function getAllComments(req, res) {
+    try {
+        const comments = await commentsService.getAllComments();
+        res.status(200).json({ comments });
+    }
+    catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
 export async function createComment(req, res) {
     try {
         const { postId } = req.params;
