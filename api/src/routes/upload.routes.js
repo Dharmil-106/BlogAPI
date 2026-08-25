@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { Readable } from 'stream';
 import { requireAuth, requireRole } from '../middleware/auth.middleware.js';
 import cloudinary from '../config/cloudinary.js';
 
@@ -15,7 +16,7 @@ router.post('/', requireAuth, requireRole('AUTHOR'), upload.single('image'), asy
         { folder: 'blog-api' },
         (error, result) => error ? reject(error) : resolve(result)
       );
-      stream.end(req.file.buffer);
+      Readable.from(req.file.buffer).pipe(stream);
     });
 
     res.status(200).json({ url: result.secure_url });

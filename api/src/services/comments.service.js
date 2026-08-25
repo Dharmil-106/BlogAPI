@@ -59,3 +59,13 @@ export async function deleteComment(postId, id, requester) {
         throw error;
     }
 }
+
+export async function getAllComments() {
+    return prisma.comment.findMany({
+        orderBy: { createdAt: 'desc' },
+        include: {
+            author: { select: { id: true, name: true, pfp: true } },
+            post: { select: { id: true, title: true } },
+        },
+    });
+}
