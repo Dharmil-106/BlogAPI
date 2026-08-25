@@ -1,0 +1,32 @@
+.home-page {
+  animation: fade-in-up var(--transition-slow) ease both;
+}
+
+.home-page__section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+.home-page__section-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.home-page__view-all {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+  transition: color var(--transition-fast);
+}
+
+.home-page__view-all:hover {
+  color: var(--accent-hover);
+}

@@ -1,0 +1,203 @@
+.single-post {
+  padding-top: var(--space-3xl);
+  animation: fade-in-up var(--transition-slow) ease both;
+}
+
+.single-post__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+  margin-bottom: var(--space-xl);
+  transition: color var(--transition-fast);
+}
+
+.single-post__back:hover {
+  color: var(--accent-hover);
+}
+
+.single-post__title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: var(--space-md);
+  line-height: 1.15;
+}
+
+.single-post__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.single-post__meta-separator {
+  color: var(--text-faint);
+}
+
+.single-post__banner {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  margin-bottom: var(--space-2xl);
+}
+
+/* ─── Post content prose styling ─── */
+.single-post__content {
+  max-width: var(--reading-width);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.single-post__content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+  color: var(--text);
+}
+
+.single-post__content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.single-post__content p {
+  margin-bottom: var(--space-md);
+  color: var(--text-muted);
+}
+
+.single-post__content a {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+.single-post__content a:hover {
+  color: var(--accent-secondary-hover);
+}
+
+.single-post__content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background-color: var(--surface);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  color: var(--accent-secondary);
+}
+
+.single-post__content pre {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+.single-post__content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.single-post__content ul,
+.single-post__content ol {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-lg);
+}
+
+.single-post__content ul {
+  list-style: disc;
+}
+
+.single-post__content ol {
+  list-style: decimal;
+}
+
+.single-post__content li {
+  margin-bottom: var(--space-xs);
+  color: var(--text-muted);
+}
+
+.single-post__content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: var(--space-md);
+  margin: var(--space-lg) 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.single-post__content img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  margin: var(--space-lg) 0;
+}
+
+.single-post__content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-2xl) 0;
+}
+
+/* ─── Loading skeleton ─── */
+.single-post__skeleton-title {
+  height: 40px;
+  width: 75%;
+  margin-bottom: var(--space-md);
+}
+
+.single-post__skeleton-meta {
+  height: 16px;
+  width: 300px;
+  margin-bottom: var(--space-2xl);
+}
+
+.single-post__skeleton-line {
+  height: 16px;
+  margin-bottom: var(--space-sm);
+}
+
+.single-post__skeleton-line:nth-child(odd) {
+  width: 100%;
+}
+
+.single-post__skeleton-line:nth-child(even) {
+  width: 85%;
+}
+
+/* ─── Not found ─── */
+.single-post__not-found {
+  text-align: center;
+  padding: var(--space-4xl) 0;
+}
+
+.single-post__not-found h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.single-post__not-found p {
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
