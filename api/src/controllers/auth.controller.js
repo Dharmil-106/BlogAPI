@@ -1,4 +1,4 @@
-import { registerUser, loginUser } from '../services/auth.service.js';
+import { registerUser, loginUser, loginWithGoogle } from '../services/auth.service.js';
 
 export async function register(req, res) {
     try {
@@ -23,4 +23,14 @@ export async function login(req, res) {
     } catch (err) {
         res.status(401).json({ error: err.message });
     }
+}
+
+export async function googleLogin(req, res) {
+  try {
+    const { credential } = req.body;
+    const token = await loginWithGoogle(credential);
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(401).json({ error: err.message });
+  }
 }
