@@ -53,7 +53,7 @@
 }
 
 .comments__google-btn:hover {
-  background-color: rgba(242, 184, 75, 0.1);
+  background-color: var(--accent-glow-strong);
   color: var(--accent-hover);
 }
 

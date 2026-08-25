@@ -117,7 +117,7 @@
 .about-page__social-link:hover {
   color: var(--accent);
   border-color: var(--accent);
-  background-color: rgba(242, 184, 75, 0.06);
+  background-color: var(--accent-glow);
 }
 
 .about-page__social-link svg {
