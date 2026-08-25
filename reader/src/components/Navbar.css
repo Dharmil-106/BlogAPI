@@ -80,6 +80,33 @@
   flex-shrink: 0;
 }
 
+.navbar__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.navbar__theme-toggle:hover {
+  color: var(--accent);
+  background-color: var(--surface-hover);
+}
+
+.navbar__theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-base);
+}
+
+.navbar__theme-toggle:hover svg {
+  transform: rotate(15deg);
+}
+
 /* Spacer to push content below fixed nav */
 .navbar-spacer {
   height: var(--nav-height);

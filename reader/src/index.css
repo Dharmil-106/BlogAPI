@@ -2,8 +2,9 @@
    Design System — CSS Custom Properties & Reset
    ============================================ */
 
-/* ---------- Tokens ---------- */
-:root {
+/* ---------- Theme: Dark (default) ---------- */
+:root,
+:root[data-theme="dark"] {
   /* Colors */
   --bg: #0B0E14;
   --surface: #12161F;
@@ -20,9 +21,41 @@
   --accent-secondary: #7DD3FC;
   --accent-secondary-hover: #A0E0FD;
 
+  --accent-glow: rgba(242, 184, 75, 0.06);
+  --accent-glow-strong: rgba(242, 184, 75, 0.1);
+  --accent-selection: rgba(242, 184, 75, 0.25);
+
   --danger: #F87171;
   --success: #34D399;
+}
 
+/* ---------- Theme: Light ---------- */
+:root[data-theme="light"] {
+  --bg: #FAFAF8;
+  --surface: #FFFFFF;
+  --surface-hover: #F0F0EC;
+  --border: #E2E2DE;
+  --border-subtle: #EBEBEA;
+
+  --text: #1A1D23;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+
+  --accent: #C9860E;
+  --accent-hover: #A5700A;
+  --accent-secondary: #0891B2;
+  --accent-secondary-hover: #06738E;
+
+  --accent-glow: rgba(201, 134, 14, 0.06);
+  --accent-glow-strong: rgba(201, 134, 14, 0.1);
+  --accent-selection: rgba(201, 134, 14, 0.2);
+
+  --danger: #DC2626;
+  --success: #16A34A;
+}
+
+/* ---------- Non-color tokens ---------- */
+:root {
   /* Typography */
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -78,6 +111,7 @@ body {
   color: var(--text);
   background-color: var(--bg);
   min-height: 100vh;
+  transition: color var(--transition-base), background-color var(--transition-base);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -135,7 +169,7 @@ code {
 
 /* ---------- Selection ---------- */
 ::selection {
-  background-color: rgba(242, 184, 75, 0.25);
+  background-color: var(--accent-selection);
   color: var(--text);
 }
 
