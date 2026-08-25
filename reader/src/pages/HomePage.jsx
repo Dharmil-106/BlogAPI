@@ -2,21 +2,23 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import PostList from '../components/PostList';
-import { fetchPosts } from '../api/client';
+import { getPosts } from '../api/client';
 import './HomePage.css';
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
     async function load() {
       try {
-        const data = await fetchPosts();
-        if (!cancelled) setPosts(data);
+        const data = await getPosts();
+        if (!cancelled) setPosts(data.posts);
       } catch (err) {
         console.error('Failed to fetch posts:', err);
+        if (!cancelled) setError(err.message);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -36,7 +38,13 @@ export default function HomePage() {
             View all →
           </Link>
         </div>
-        <PostList posts={posts} limit={4} loading={loading} />
+        {error ? (
+          <p className="text-muted" style={{ padding: 'var(--space-md) 0' }}>
+            Failed to load posts.
+          </p>
+        ) : (
+          <PostList posts={posts} limit={4} loading={loading} />
+        )}
       </section>
     </div>
   );

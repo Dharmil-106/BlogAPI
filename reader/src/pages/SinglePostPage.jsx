@@ -1,47 +1,43 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
+import { useAuth } from '../context/AuthContext';
 import {
-  fetchPost,
-  fetchComments,
+  getPost,
+  getComments,
   createComment,
   deleteComment,
-  getCurrentUser,
-  googleSignIn,
-  signOut,
+  loginWithGoogle,
 } from '../api/client';
 import './SinglePostPage.css';
 
 export default function SinglePostPage() {
   const { id } = useParams();
+  const { user, token, login, logout } = useAuth();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  // Load post + comments + current user
+  // Load post + comments
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
-        const [postData, commentsData] = await Promise.all([
-          fetchPost(id),
-          fetchComments(id),
+        const [postRes, commentsRes] = await Promise.all([
+          getPost(id),
+          getComments(id),
         ]);
 
         if (cancelled) return;
 
-        if (!postData) {
+        if (!postRes.post) {
           setNotFound(true);
         } else {
-          setPost(postData);
-          setComments(commentsData);
+          setPost(postRes.post);
+          setComments(commentsRes.comments || []);
         }
-
-        const currentUser = getCurrentUser();
-        setUser(currentUser);
       } catch (err) {
         console.error('Failed to load post:', err);
         if (!cancelled) setNotFound(true);
@@ -55,27 +51,30 @@ export default function SinglePostPage() {
   }, [id]);
 
   async function handleCommentSubmit(content) {
-    await createComment(id, content);
+    await createComment(id, content, token);
     // Re-fetch comments after submit
-    const updated = await fetchComments(id);
-    setComments(updated);
+    const updated = await getComments(id);
+    setComments(updated.comments || []);
   }
 
   async function handleCommentDelete(commentId) {
-    await deleteComment(id, commentId);
-    const updated = await fetchComments(id);
-    setComments(updated);
+    await deleteComment(id, commentId, token);
+    const updated = await getComments(id);
+    setComments(updated.comments || []);
   }
 
-  async function handleSignIn() {
-    await googleSignIn();
-    const currentUser = getCurrentUser();
-    setUser(currentUser);
+async function handleGoogleSuccess(credentialResponse) {
+  try {
+    const res = await loginWithGoogle(credentialResponse.credential);
+    login(res.token);
+  } catch (err) {
+    console.error('Sign-in failed:', err);
   }
+}
 
-  async function handleSignOut() {
-    await signOut();
-    setUser(null);
+
+  function handleSignOut() {
+    logout();
   }
 
   // Loading skeleton
@@ -142,7 +141,7 @@ export default function SinglePostPage() {
         user={user}
         onSubmit={handleCommentSubmit}
         onDelete={handleCommentDelete}
-        onSignIn={handleSignIn}
+        onSignIn={handleGoogleSuccess}
         onSignOut={handleSignOut}
       />
     </div>

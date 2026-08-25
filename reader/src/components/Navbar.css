@@ -68,6 +68,18 @@
   user-select: none;
 }
 
+.navbar__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  flex-shrink: 0;
+}
+
 /* Spacer to push content below fixed nav */
 .navbar-spacer {
   height: var(--nav-height);
