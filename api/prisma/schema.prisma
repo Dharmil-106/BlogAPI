@@ -20,6 +20,12 @@ model User {
   password String?
   pfp      String?
 
+  bio          String?
+  tagline      String?
+  githubUrl    String?
+  linkedinUrl  String?
+  projectLinks Json?
+
   role Role @default(READER)
 
   createdAt DateTime @default(now())
