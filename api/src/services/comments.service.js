@@ -7,6 +7,7 @@ export async function getCommentsForPost(postId) {
         const comments = await prisma.comment.findMany({
             where: { postId },
             orderBy: { createdAt: "asc" },
+            include: { author: { select: { id: true, name: true, pfp: true } } },
         });
 
         return comments;
@@ -27,6 +28,7 @@ export async function createComment({ postId, content, authorId }) {
         // prisma.comment.create(...)
         const comment = await prisma.comment.create({
             data: { postId, content, authorId },
+            include: { author: { select: { id: true, name: true, pfp: true } } }
         });
 
         return comment;
