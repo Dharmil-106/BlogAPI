@@ -9,7 +9,24 @@ import uploadRoutes from './routes/upload.routes.js';
 const app = express();
 
 // Middlerwares
-app.use(cors());
+const allowedOrigins = [
+    process.env.READER_URL,
+    process.env.CMS_URL,
+    'http://localhost:5173',
+    'http://localhost:5174',
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
+
 app.use(express.json());
 
 // Health check
@@ -17,7 +34,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/comments',commentsRoutes);
+app.use('/comments', commentsRoutes);
 app.use('/posts', postsRoutes);
 app.use('/author', authorRoutes);
 app.use('/upload', uploadRoutes)
