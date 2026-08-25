@@ -15,11 +15,12 @@ export async function getProfile(req, res) {
 
 export async function updateProfile(req, res) {
     try {
-        const { bio, tagline, githubUrl, linkedinUrl, projectLinks } = req.body;
+        const { bio, tagline, currentFocus, githubUrl, linkedinUrl, projectLinks } = req.body;
         
         const updateData = {};
         if (bio !== undefined) updateData.bio = bio;
         if (tagline !== undefined) updateData.tagline = tagline;
+        if (currentFocus !== undefined) updateData.currentFocus = currentFocus;
         if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
         if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl;
         if (projectLinks !== undefined) updateData.projectLinks = projectLinks;

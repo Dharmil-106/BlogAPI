@@ -22,6 +22,7 @@ model User {
 
   bio          String?
   tagline      String?
+  currentFocus String?
   githubUrl    String?
   linkedinUrl  String?
   projectLinks Json?

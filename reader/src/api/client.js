@@ -18,6 +18,12 @@ export async function getComments(postId) {
   return res.json();
 }
 
+export async function getAuthorProfile() {
+  const res = await fetch(`${API_BASE}/author`);
+  if (!res.ok) throw new Error('Failed to fetch profile');
+  return res.json();
+}
+
 export async function createComment(postId, content, token) {
   const res = await fetch(`${API_BASE}/comments/${postId}`, {
     method: 'POST',

@@ -91,7 +91,11 @@
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-left: auto;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  text-align: right;
+  word-break: break-word;
+  white-space: normal;
+  min-width: 0;
 }
 
 /* ─── Social links ─── */

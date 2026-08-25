@@ -7,6 +7,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState({
     bio: '',
     tagline: '',
+    currentFocus: '',
     githubUrl: '',
     linkedinUrl: '',
     projectLinks: []
@@ -26,6 +27,7 @@ export default function ProfilePage() {
         setProfile({
           bio: res.bio || '',
           tagline: res.tagline || '',
+          currentFocus: res.currentFocus || '',
           githubUrl: res.githubUrl || '',
           linkedinUrl: res.linkedinUrl || '',
           projectLinks: res.projectLinks || []
@@ -117,6 +119,16 @@ export default function ProfilePage() {
               value={profile.bio}
               onChange={e => handleFieldChange('bio', e.target.value)}
               placeholder="Detailed bio..."
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Current Focus</label>
+            <textarea 
+              rows="4"
+              value={profile.currentFocus}
+              onChange={e => handleFieldChange('currentFocus', e.target.value)}
+              placeholder="What are you currently focusing on?"
             />
           </div>
         </div>
