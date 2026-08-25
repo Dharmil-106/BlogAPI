@@ -7,10 +7,12 @@ export async function getPublishedPosts(requester) {
 
         const isAuthor = requester?.role === 'AUTHOR';
 
+        const include = { author: { select: { id: true, name: true, pfp: true } } };
+
         if (isAuthor) {
-            return await prisma.post.findMany({ orderBy: { createdAt: 'desc' } });
+            return await prisma.post.findMany({ include, orderBy: { createdAt: 'desc' } });
         }
-        return await prisma.post.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' } });
+        return await prisma.post.findMany({ where: { published: true }, include, orderBy: { createdAt: 'desc' } });
 
     } catch (error) {
         console.error("Error in getPublishedPosts:", error);
@@ -23,7 +25,10 @@ export async function getPostById(id, requester) {
     try {
         // prisma.post.findUnique({ where: { id } })
         // throw if not found
-        const post = await prisma.post.findUnique({ where: { id } });
+        const post = await prisma.post.findUnique({
+            where: { id },
+            include: { author: { select: { id: true, name: true, pfp: true } } },
+        });
 
         if (!post) {
             throw new Error("Post not found");
@@ -47,7 +52,10 @@ export async function createPost({ title, content, bannerImg, authorId }) {
 
     try {
         // prisma.post.create(...)
-        return await prisma.post.create({ data: { title, content, bannerImg, authorId } });
+        return await prisma.post.create({ 
+            data: { title, content, bannerImg, authorId },
+            include: { author: { select: { id: true, name: true, pfp: true } } }
+        });
 
     } catch (error) {
         console.error("Error in createPost:", error);
@@ -62,7 +70,11 @@ export async function updatePost(id, data, requesterId) {
         if (!post) throw new Error("Post not found");
         if (post.authorId !== requesterId) throw new Error("Not your post");
 
-        return await prisma.post.update({ where: { id }, data });
+        return await prisma.post.update({ 
+            where: { id }, 
+            data,
+            include: { author: { select: { id: true, name: true, pfp: true } } }
+        });
 
     } catch (error) {
         console.error("Error in updatePost:", error);
@@ -94,7 +106,8 @@ export async function togglePublish(id, requesterId) {
 
         return await prisma.post.update({
             where: { id },
-            data: { published: !post.published }
+            data: { published: !post.published },
+            include: { author: { select: { id: true, name: true, pfp: true } } }
         });
 
     } catch (error) {
