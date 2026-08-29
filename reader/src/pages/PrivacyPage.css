@@ -1,0 +1,47 @@
+.privacy-page {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-4xl);
+  animation: fade-in-up var(--transition-slow) ease both;
+  max-width: var(--reading-width);
+}
+
+.privacy-page__title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: var(--space-xs);
+}
+
+.privacy-page__date {
+  font-size: 0.9375rem;
+  color: var(--text-faint);
+  margin-bottom: var(--space-2xl);
+  font-family: var(--font-mono);
+}
+
+.privacy-page__intro {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2xl);
+}
+
+.privacy-page__section {
+  margin-bottom: var(--space-xl);
+}
+
+.privacy-page__section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+.privacy-page__section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}

@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import PostsPage from './pages/PostsPage';
 import SinglePostPage from './pages/SinglePostPage';
 import AboutPage from './pages/AboutPage';
+import PrivacyPage from './pages/PrivacyPage';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: 'posts', element: <PostsPage /> },
       { path: 'posts/:id', element: <SinglePostPage /> },
       { path: 'about', element: <AboutPage /> },
+      { path: 'privacy', element: <PrivacyPage /> },
     ],
   },
 ]);
