@@ -16,6 +16,8 @@ const allowedOrigins = [
     'http://localhost:5174',
 ];
 
+app.set('trust proxy', 1);
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -28,6 +30,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
