@@ -11,3 +11,9 @@ export const registerSchema = z.object({
         .min(2, { message: "Name must be at least 2 characters" })
         .max(50, { message: "Name cannot exceed 50 characters" })
 });
+
+export const loginSchema = z.object({
+    email: z.string({ message: "Email is required" })
+        .email({ message: "Please enter a valid email address" }),
+    password: z.string({ message: "Password is required" })
+});
