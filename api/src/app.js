@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import authRoutes from './routes/auth.routes.js';
 import postsRoutes from './routes/posts.routes.js';
 import commentsRoutes from './routes/comments.routes.js';
@@ -16,6 +17,8 @@ const allowedOrigins = [
     'http://localhost:5174',
 ];
 
+app.use(helmet());
+
 app.set('trust proxy', 1);
 
 app.use(cors({
@@ -30,7 +33,6 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
