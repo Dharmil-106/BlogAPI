@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { UnauthorizedError, ForbiddenError } from '../errors/AppError.js';
 
 export function requireAuth(req, res, next) {
 
@@ -17,7 +18,7 @@ export function requireAuth(req, res, next) {
     }
     catch (error) {
         console.error('Error in requireAuth:', error);
-        return res.status(401).json({ error: 'Unauthorized' });
+        throw new UnauthorizedError();
     }
 }
 
@@ -38,13 +39,13 @@ export function requireRole(role) {
         try {
             // check req.user.role === role, else 403
             if (req.user.role !== role) {
-                return res.status(403).json({ error: 'Forbidden' });
+                throw new ForbiddenError();
             }
             next();
         }
         catch (error) {
             console.error('Error in requireRole:', error);
-            return res.status(403).json({ error: 'Forbidden' });
+            throw new ForbiddenError();
         }
     };
 }
