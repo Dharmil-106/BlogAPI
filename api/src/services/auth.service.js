@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '../db/db.js';
 import { verifyGoogleToken } from '../config/googleAuth.js';
+import { ConflictError, UnauthorizedError } from '../errors/AppError.js';
 
 export async function registerUser({ email, password, name }) {
 
@@ -9,7 +10,7 @@ export async function registerUser({ email, password, name }) {
         // check if email already exists → throw if so
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
-            throw new Error('Email already exists');
+            throw new ConflictError('Email already exists');
         }
 
         // hash password: await bcrypt.hash(password, 10)
@@ -51,14 +52,14 @@ export async function loginUser({ email, password }) {
 
         // if no user OR user.password is null (Google-only account) → throw
         if (!user || !user.password) {
-            throw new Error('Try Google Sign-In instead!');
+            throw new UnauthorizedError('Try Google Sign-In instead!');
         }
 
         // bcrypt.compare(password, user.password)
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            throw new Error('Invalid email or password');
+            throw new UnauthorizedError('Invalid email or password');
         }
 
         // sign and return JWT same as above
