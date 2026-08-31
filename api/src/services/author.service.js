@@ -1,4 +1,5 @@
 import prisma from "../db/db.js";
+import { NotFoundError } from '../errors/AppError.js';
 
 export async function getAuthorProfile() {
     try {
@@ -17,7 +18,7 @@ export async function getAuthorProfile() {
         });
         
         if (!author) {
-            throw new Error("Author profile not found");
+            throw new NotFoundError("Author profile not found");
         }
         
         return author;

@@ -1,4 +1,5 @@
 import prisma from "../db/db.js";
+import { NotFoundError, ForbiddenError } from '../errors/AppError.js';
 
 export async function getPublishedPosts(requester) {
 
@@ -31,14 +32,13 @@ export async function getPostById(id, requester) {
         });
 
         if (!post) {
-            throw new Error("Post not found");
+            throw new NotFoundError("Post not found");
         }
 
         const isAuthor = requester?.role === 'AUTHOR';
 
         if (!post.published && !isAuthor) {
-            // same message as "not found" — don't reveal it exists
-            throw new Error('Post not found');
+            throw new NotFoundError('Post not found');
         }
 
         return post;
@@ -67,8 +67,8 @@ export async function updatePost(id, data, requesterId) {
 
     try {
         const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) throw new Error("Post not found");
-        if (post.authorId !== requesterId) throw new Error("Not your post");
+        if (!post) throw new NotFoundError("Post not found");
+        if (post.authorId !== requesterId) throw new ForbiddenError("Not your post");
 
         return await prisma.post.update({ 
             where: { id }, 
@@ -86,8 +86,8 @@ export async function deletePost(id, requesterId) {
 
     try {
         const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) throw new Error("Post not found");
-        if (post.authorId !== requesterId) throw new Error("Not your post");
+        if (!post) throw new NotFoundError("Post not found");
+        if (post.authorId !== requesterId) throw new ForbiddenError("Not your post");
 
         return await prisma.post.delete({ where: { id } });
 
@@ -101,8 +101,8 @@ export async function togglePublish(id, requesterId) {
 
     try {
         const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) throw new Error("Post not found");
-        if (post.authorId !== requesterId) throw new Error("Not your post");
+        if (!post) throw new NotFoundError("Post not found");
+        if (post.authorId !== requesterId) throw new ForbiddenError("Not your post");
 
         return await prisma.post.update({
             where: { id },
