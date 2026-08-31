@@ -1,33 +1,22 @@
 import * as authorService from '../services/author.service.js';
+import { sendSuccess } from '../utils/sendSuccess.js';
 
 export async function getProfile(req, res) {
-    try {
-        const profile = await authorService.getAuthorProfile();
-        res.status(200).json(profile);
-    } catch (err) {
-        if (err.message === "Author profile not found") {
-            res.status(404).json({ error: err.message });
-        } else {
-            res.status(500).json({ error: "Database timeout/error: " + err.message });
-        }
-    }
+    const profile = await authorService.getAuthorProfile();
+    sendSuccess(res, { author: profile });
 }
 
 export async function updateProfile(req, res) {
-    try {
-        const { bio, tagline, currentFocus, githubUrl, linkedinUrl, projectLinks } = req.body;
-        
-        const updateData = {};
-        if (bio !== undefined) updateData.bio = bio;
-        if (tagline !== undefined) updateData.tagline = tagline;
-        if (currentFocus !== undefined) updateData.currentFocus = currentFocus;
-        if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
-        if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl;
-        if (projectLinks !== undefined) updateData.projectLinks = projectLinks;
+    const { bio, tagline, currentFocus, githubUrl, linkedinUrl, projectLinks } = req.body;
+    
+    const updateData = {};
+    if (bio !== undefined) updateData.bio = bio;
+    if (tagline !== undefined) updateData.tagline = tagline;
+    if (currentFocus !== undefined) updateData.currentFocus = currentFocus;
+    if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
+    if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl;
+    if (projectLinks !== undefined) updateData.projectLinks = projectLinks;
 
-        const profile = await authorService.updateAuthorProfile(req.user.userId, updateData);
-        res.status(200).json(profile);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
+    const profile = await authorService.updateAuthorProfile(req.user.userId, updateData);
+    sendSuccess(res, { author: profile });
 }
