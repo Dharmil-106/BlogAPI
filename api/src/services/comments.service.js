@@ -1,4 +1,5 @@
 import prisma from "../db/db.js";
+import { NotFoundError, ForbiddenError } from '../errors/AppError.js';
 
 export async function getCommentsForPost(postId) {
 
@@ -22,7 +23,7 @@ export async function createComment({ postId, content, authorId }) {
         // verify the post exists and is published before allowing a comment
         const post = await prisma.post.findFirst({ where: { id: postId, published: true } });
         if (!post) {
-            throw new Error("Post not found.");
+            throw new NotFoundError("Post not found.");
         }
 
         // prisma.comment.create(...)
@@ -43,14 +44,14 @@ export async function deleteComment(postId, id, requester) {
         // fetch comment
         const comment = await prisma.comment.findUnique({ where: { id } });
         if (!comment || comment.postId !== postId) {
-            throw new Error("Comment not found.");
+            throw new NotFoundError("Comment not found.");
         }
 
         const post = await prisma.post.findUnique({ where: { id: postId } });
         const isCommentAuthor = comment.authorId === requester.userId;
         const isPostOwner = post?.authorId === requester.userId;
         if (!isCommentAuthor && !isPostOwner) {
-            throw new Error("Unauthorized to delete this comment.");
+            throw new ForbiddenError("Unauthorized to delete this comment.");
         }
 
         await prisma.comment.delete({ where: { id } });
