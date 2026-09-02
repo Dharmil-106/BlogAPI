@@ -24,13 +24,14 @@ export default function ProfilePage() {
       try {
         const res = await getAuthorProfile();
         if (cancelled) return;
+        const author = res.author;
         setProfile({
-          bio: res.bio || '',
-          tagline: res.tagline || '',
-          currentFocus: res.currentFocus || '',
-          githubUrl: res.githubUrl || '',
-          linkedinUrl: res.linkedinUrl || '',
-          projectLinks: res.projectLinks || []
+          bio: author.bio || '',
+          tagline: author.tagline || '',
+          currentFocus: author.currentFocus || '',
+          githubUrl: author.githubUrl || '',
+          linkedinUrl: author.linkedinUrl || '',
+          projectLinks: author.projectLinks || []
         });
       } catch (err) {
         if (!cancelled) setError(err.message || 'Failed to load profile');
