@@ -1,27 +1,36 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+async function handleResponse(res) {
+  const body = await res.json();
+
+  if (!body.success) {
+    const err = new Error(body.error || 'Request failed');
+    if (body.errors) err.errors = body.errors;
+    err.status = res.status;
+    throw err;
+  }
+
+  return body.data;
+}
+
 export async function getPosts() {
   const res = await fetch(`${API_BASE}/posts`);
-  if (!res.ok) throw new Error('Failed to fetch posts');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getPost(id) {
   const res = await fetch(`${API_BASE}/posts/${id}`);
-  if (!res.ok) throw new Error('Failed to fetch post');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getComments(postId) {
   const res = await fetch(`${API_BASE}/comments/${postId}`);
-  if (!res.ok) throw new Error('Failed to fetch comments');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getAuthorProfile() {
   const res = await fetch(`${API_BASE}/author`);
-  if (!res.ok) throw new Error('Failed to fetch profile');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function createComment(postId, content, token) {
@@ -33,8 +42,7 @@ export async function createComment(postId, content, token) {
     },
     body: JSON.stringify({ content }),
   });
-  if (!res.ok) throw new Error('Failed to post comment');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function deleteComment(postId, id, token) {
@@ -42,8 +50,7 @@ export async function deleteComment(postId, id, token) {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) throw new Error('Failed to delete comment');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function loginWithGoogle(credential) {
@@ -52,6 +59,5 @@ export async function loginWithGoogle(credential) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ credential }),
   });
-  if (!res.ok) throw new Error('Google login failed');
-  return res.json(); // { token }
+  return handleResponse(res);
 }
