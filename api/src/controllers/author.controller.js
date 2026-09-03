@@ -13,8 +13,8 @@ export async function updateProfile(req, res) {
     if (bio !== undefined) updateData.bio = bio;
     if (tagline !== undefined) updateData.tagline = tagline;
     if (currentFocus !== undefined) updateData.currentFocus = currentFocus;
-    if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
-    if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl;
+    if (githubUrl !== undefined) updateData.githubUrl = githubUrl === '' ? null : githubUrl;
+    if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl === '' ? null : linkedinUrl;
     if (projectLinks !== undefined) updateData.projectLinks = projectLinks;
 
     const profile = await authorService.updateAuthorProfile(req.user.userId, updateData);
