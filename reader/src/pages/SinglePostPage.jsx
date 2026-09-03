@@ -18,6 +18,7 @@ export default function SinglePostPage() {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [error, setError] = useState('');
 
   // Load post + comments
   useEffect(() => {
@@ -40,7 +41,13 @@ export default function SinglePostPage() {
         }
       } catch (err) {
         console.error('Failed to load post:', err);
-        if (!cancelled) setNotFound(true);
+        if (!cancelled) {
+          if (err.status === 404) {
+            setNotFound(true);
+          } else {
+            setError(err.message || 'Something went wrong');
+          }
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -69,6 +76,7 @@ async function handleGoogleSuccess(credentialResponse) {
     login(res.token);
   } catch (err) {
     console.error('Sign-in failed:', err);
+    alert(err.message || 'Sign-in failed');
   }
 }
 
@@ -97,6 +105,21 @@ async function handleGoogleSuccess(credentialResponse) {
         <div className="single-post__not-found" id="post-not-found">
           <h2>Post not found</h2>
           <p>The post you're looking for doesn't exist or has been removed.</p>
+          <Link to="/posts" className="single-post__back">
+            ← Back to all posts
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Error (non-404)
+  if (error) {
+    return (
+      <div className="single-post container">
+        <div className="single-post__not-found" id="post-error">
+          <h2>Something went wrong</h2>
+          <p>{error}</p>
           <Link to="/posts" className="single-post__back">
             ← Back to all posts
           </Link>

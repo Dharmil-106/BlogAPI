@@ -10,7 +10,7 @@ export default function AboutPage() {
     let cancelled = false;
     getAuthorProfile()
       .then(data => {
-        if (!cancelled) setProfile(data);
+        if (!cancelled) setProfile(data.author);
       })
       .catch(err => console.error(err))
       .finally(() => {

@@ -4,26 +4,36 @@ function authHeaders(token) {
   return { Authorization: `Bearer ${token}` };
 }
 
+async function handleResponse(res) {
+  const body = await res.json();
+
+  if (!body.success) {
+    const err = new Error(body.error || 'Request failed');
+    if (body.errors) err.errors = body.errors;
+    err.status = res.status;
+    throw err;
+  }
+
+  return body.data;
+}
+
 export async function login(email, password) {
   const res = await fetch(`${API_BASE}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  if (!res.ok) throw new Error('Login failed');
-  return res.json(); // { token }
+  return handleResponse(res);
 }
 
 export async function getAllPosts(token) {
   const res = await fetch(`${API_BASE}/posts`, { headers: authHeaders(token) });
-  if (!res.ok) throw new Error('Failed to fetch posts');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getPost(id, token) {
   const res = await fetch(`${API_BASE}/posts/${id}`, { headers: authHeaders(token) });
-  if (!res.ok) throw new Error('Failed to fetch post');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function createPost(data, token) {
@@ -32,8 +42,7 @@ export async function createPost(data, token) {
     headers: { 'Content-Type': 'application/json', ...authHeaders(token) },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to create post');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function updatePost(id, data, token) {
@@ -42,8 +51,7 @@ export async function updatePost(id, data, token) {
     headers: { 'Content-Type': 'application/json', ...authHeaders(token) },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to update post');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function deletePost(id, token) {
@@ -51,8 +59,7 @@ export async function deletePost(id, token) {
     method: 'DELETE',
     headers: authHeaders(token),
   });
-  if (!res.ok) throw new Error('Failed to delete post');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function togglePublish(id, token) {
@@ -60,22 +67,19 @@ export async function togglePublish(id, token) {
     method: 'PATCH',
     headers: authHeaders(token),
   });
-  if (!res.ok) throw new Error('Failed to toggle publish');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getAllComments(token) {
   const res = await fetch(`${API_BASE}/comments`, { headers: authHeaders(token) });
-  if (!res.ok) throw new Error('Failed to fetch comments');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getPostComments(postId, token) {
   const res = await fetch(`${API_BASE}/comments/${postId}`, {
     headers: authHeaders(token),
   });
-  if (!res.ok) throw new Error('Failed to fetch post comments');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function deleteComment(postId, id, token) {
@@ -83,14 +87,12 @@ export async function deleteComment(postId, id, token) {
     method: 'DELETE',
     headers: authHeaders(token),
   });
-  if (!res.ok) throw new Error('Failed to delete comment');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function getAuthorProfile() {
   const res = await fetch(`${API_BASE}/author`);
-  if (!res.ok) throw new Error('Failed to fetch profile');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function updateAuthorProfile(data, token) {
@@ -99,8 +101,7 @@ export async function updateAuthorProfile(data, token) {
     headers: { 'Content-Type': 'application/json', ...authHeaders(token) },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to update profile');
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function uploadImage(file, token, filename) {
@@ -111,6 +112,5 @@ export async function uploadImage(file, token, filename) {
     headers: authHeaders(token), // don't set Content-Type manually — browser sets it with the correct boundary for FormData
     body: formData,
   });
-  if (!res.ok) throw new Error('Failed to upload image');
-  return res.json(); // { url }
+  return handleResponse(res);
 }
