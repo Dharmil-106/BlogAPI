@@ -16,3 +16,12 @@ export const commentLimiter = rateLimit({
   keyGenerator: (req) => req.user?.userId ?? req.ip,
   message: { error: "You're commenting too frequently, please slow down." },
 });
+
+export const uploadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 20,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (req) => req.user?.userId ?? req.ip,
+  message: { error: "Too many uploads, please try again later." },
+});
