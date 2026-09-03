@@ -10,7 +10,9 @@ export const createPostSchema = z.object({
   bannerImg: z.union([
     z.url({ message: "Invalid banner image URL" }),
     z.literal("")
-  ])
+  ]),
+
+  published: z.boolean().optional()
 });
 
 // Same shape reused for updates — CMS always sends the full post object

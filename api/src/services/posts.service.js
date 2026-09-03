@@ -48,12 +48,12 @@ export async function getPostById(id, requester) {
     }
 }
 
-export async function createPost({ title, content, bannerImg, authorId }) {
+export async function createPost({ title, content, bannerImg, published, authorId }) {
 
     try {
         // prisma.post.create(...)
-        return await prisma.post.create({ 
-            data: { title, content, bannerImg, authorId },
+        return await prisma.post.create({
+            data: { title, content, bannerImg, published, authorId },
             include: { author: { select: { id: true, name: true, pfp: true } } }
         });
 
@@ -70,8 +70,8 @@ export async function updatePost(id, data, requesterId) {
         if (!post) throw new NotFoundError("Post not found");
         if (post.authorId !== requesterId) throw new ForbiddenError("Not your post");
 
-        return await prisma.post.update({ 
-            where: { id }, 
+        return await prisma.post.update({
+            where: { id },
             data,
             include: { author: { select: { id: true, name: true, pfp: true } } }
         });

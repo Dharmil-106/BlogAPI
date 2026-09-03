@@ -16,7 +16,7 @@ export default function EditorPage() {
   const [bannerImg, setBannerImg] = useState('');
 
   const [loading, setLoading] = useState(!!id);
-  const [saving, setSaving] = useState(false);
+  const [savingAction, setSavingAction] = useState(null); // null | 'draft' | 'publish'
   const [uploadingBanner, setUploadingBanner] = useState(false);
   const [error, setError] = useState('');
 
@@ -74,7 +74,7 @@ export default function EditorPage() {
       return;
     }
 
-    setSaving(true);
+    setSavingAction(publish ? 'publish' : 'draft');
     try {
       const data = {
         title,
@@ -92,7 +92,7 @@ export default function EditorPage() {
     } catch (err) {
       alert(err.message || 'Failed to save post');
     } finally {
-      setSaving(false);
+      setSavingAction(null);
     }
   }
 
@@ -112,16 +112,16 @@ export default function EditorPage() {
           <button
             className="btn-secondary"
             onClick={() => handleSave(false)}
-            disabled={saving}
+            disabled={savingAction !== null}
           >
-            {saving ? 'Saving...' : 'Save Draft'}
+            {savingAction === 'draft' ? 'Saving...' : 'Save Draft'}
           </button>
           <button
             className="btn-primary"
             onClick={() => handleSave(true)}
-            disabled={saving}
+            disabled={savingAction !== null}
           >
-            {saving ? 'Publishing...' : 'Publish'}
+            {savingAction === 'publish' ? 'Publishing...' : 'Publish'}
           </button>
         </div>
       </div>

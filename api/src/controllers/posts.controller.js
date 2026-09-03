@@ -13,9 +13,9 @@ export async function getPost(req, res) {
 }
 
 export async function createPost(req, res) {
-    const { title, content, bannerImg } = req.body;
+    const { title, content, bannerImg, published } = req.body;
     const authorId = req.user.userId;
-    const post = await postsService.createPost({ title, content, bannerImg, authorId });
+    const post = await postsService.createPost({ title, content, bannerImg, published, authorId });
     sendSuccess(res, { post }, 201);
 }
 
@@ -27,8 +27,8 @@ export async function deletePost(req, res) {
 
 export async function updatePost(req, res) {
     const { id } = req.params;
-    const { title, content, bannerImg } = req.body;
-    const post = await postsService.updatePost(id, { title, content, bannerImg }, req.user.userId);
+    const { title, content, bannerImg, published } = req.body;
+    const post = await postsService.updatePost(id, { title, content, bannerImg, published }, req.user.userId);
     sendSuccess(res, { post });
 }
 
