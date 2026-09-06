@@ -62,6 +62,29 @@
   height: 16px;
 }
 
+.comments__loading-spinner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.comments__loading-spinner::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent-glow-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: comments-spin 1s linear infinite;
+}
+
+@keyframes comments-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ─── Comment form (logged in) ─── */
 .comments__form-header {
   display: flex;

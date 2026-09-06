@@ -17,6 +17,7 @@ import './CommentSection.css';
 export default function CommentSection({
   comments = [],
   user = null,
+  isLoggingIn = false,
   onSubmit,
   onDelete,
   onSignIn,
@@ -45,10 +46,14 @@ export default function CommentSection({
           <p className="comments__auth-text">
             Sign in to join the conversation.
           </p>
-          <GoogleLogin
-            onSuccess={onSignIn}
-            onError={() => console.error('Google login failed')}
-          />
+          {isLoggingIn ? (
+            <div className="comments__loading-spinner">Signing in...</div>
+          ) : (
+            <GoogleLogin
+              onSuccess={onSignIn}
+              onError={() => console.error('Google login failed')}
+            />
+          )}
         </div>
       ) : (
         <>

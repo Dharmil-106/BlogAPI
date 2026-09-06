@@ -19,6 +19,7 @@ export default function SinglePostPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Load post + comments
   useEffect(() => {
@@ -71,12 +72,15 @@ export default function SinglePostPage() {
   }
 
 async function handleGoogleSuccess(credentialResponse) {
+  setIsLoggingIn(true);
   try {
     const res = await loginWithGoogle(credentialResponse.credential);
     login(res.token);
   } catch (err) {
     console.error('Sign-in failed:', err);
     alert(err.message || 'Sign-in failed');
+  } finally {
+    setIsLoggingIn(false);
   }
 }
 
@@ -162,6 +166,7 @@ async function handleGoogleSuccess(credentialResponse) {
       <CommentSection
         comments={comments}
         user={user}
+        isLoggingIn={isLoggingIn}
         onSubmit={handleCommentSubmit}
         onDelete={handleCommentDelete}
         onSignIn={handleGoogleSuccess}
