@@ -1,0 +1,40 @@
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-height) - var(--space-4xl));
+  padding-block: var(--space-4xl);
+}
+
+.not-found-content {
+  text-align: center;
+}
+
+.not-found-content h1 {
+  font-size: var(--space-4xl);
+  margin-bottom: var(--space-sm);
+}
+
+.not-found-content h2 {
+  font-size: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.not-found-content p {
+  margin-bottom: var(--space-2xl);
+}
+
+.not-found-content .btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  transition: all var(--transition-fast);
+}
+
+.not-found-content .btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}

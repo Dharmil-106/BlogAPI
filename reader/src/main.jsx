@@ -9,18 +9,22 @@ import PostsPage from './pages/PostsPage';
 import SinglePostPage from './pages/SinglePostPage';
 import AboutPage from './pages/AboutPage';
 import PrivacyPage from './pages/PrivacyPage';
+import NotFoundPage from './pages/NotFoundPage';
+import ErrorPage from './pages/ErrorPage';
 import './index.css';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       { path: 'posts', element: <PostsPage /> },
       { path: 'posts/:id', element: <SinglePostPage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);

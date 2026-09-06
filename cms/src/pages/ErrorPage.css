@@ -1,0 +1,40 @@
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding-block: var(--space-4xl);
+}
+
+.error-content {
+  text-align: center;
+}
+
+.error-content h1 {
+  color: var(--danger);
+  font-size: var(--space-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+.error-content h2 {
+  font-size: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.error-content p {
+  margin-bottom: var(--space-2xl);
+}
+
+.error-content .btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  transition: all var(--transition-fast);
+}
+
+.error-content .btn:hover {
+  background: var(--danger);
+  color: var(--bg);
+}

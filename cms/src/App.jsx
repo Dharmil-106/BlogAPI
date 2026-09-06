@@ -8,15 +8,19 @@ import DashboardPage from './pages/DashboardPage';
 import EditorPage from './pages/EditorPage';
 import CommentsPage from './pages/CommentsPage';
 import ProfilePage from './pages/ProfilePage';
+import NotFoundPage from './pages/NotFoundPage';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/',
     element: <RequireAuth />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <Layout />,
@@ -26,6 +30,7 @@ const router = createBrowserRouter([
           { path: 'posts/:id/edit', element: <EditorPage /> },
           { path: 'comments', element: <CommentsPage /> },
           { path: 'profile', element: <ProfilePage /> },
+          { path: '*', element: <NotFoundPage /> },
         ],
       },
     ],
