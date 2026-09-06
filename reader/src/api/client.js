@@ -61,3 +61,10 @@ export async function loginWithGoogle(credential) {
   });
   return handleResponse(res);
 }
+
+export async function getMe(token) {
+  const res = await fetch(`${API_BASE}/auth/me`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return handleResponse(res);
+}

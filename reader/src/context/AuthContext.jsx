@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { getMe } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -41,6 +42,15 @@ export function AuthProvider({ children }) {
       if (payload) {
         localStorage.setItem(TOKEN_KEY, token);
         setUser({ id: payload.userId, role: payload.role });
+
+        // Fetch full profile data
+        getMe(token)
+          .then(meData => {
+            setUser(prev => ({ ...prev, ...meData }));
+          })
+          .catch(err => {
+            console.error('Error fetching /auth/me:', err);
+          });
       } else {
         localStorage.removeItem(TOKEN_KEY);
         setToken(null);

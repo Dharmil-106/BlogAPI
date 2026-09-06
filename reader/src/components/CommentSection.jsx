@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import { getInitial } from '../utils/avatar';
 import './CommentSection.css';
 
 /**
@@ -54,11 +55,19 @@ export default function CommentSection({
           <div className="comments__form-header">
             <div className="comments__user-info">
               <div className="comments__avatar" id="user-avatar">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="14" height="14">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
+                {user.pfp ? (
+                  <img src={user.pfp} alt={user.name} />
+                ) : user.name ? (
+                  getInitial(user.name)
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="14" height="14">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                  </svg>
+                )}
               </div>
-              <span className="comments__user-name">Signed in</span>
+              <span className="comments__user-name">
+                {user.name ? `Signed in as ${user.name}` : 'Signed in'}
+              </span>
             </div>
             <button
               className="comments__sign-out"
@@ -132,11 +141,6 @@ export default function CommentSection({
       )}
     </section>
   );
-}
-
-function getInitial(name) {
-  if (!name) return '?';
-  return name.charAt(0).toUpperCase();
 }
 
 function formatCommentDate(iso) {

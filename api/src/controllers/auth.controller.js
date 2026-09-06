@@ -1,4 +1,4 @@
-import { registerUser, loginUser, loginWithGoogle } from '../services/auth.service.js';
+import { registerUser, loginUser, loginWithGoogle, getUserById } from '../services/auth.service.js';
 import { sendSuccess } from '../utils/sendSuccess.js';
 
 export async function register(req, res) {
@@ -18,3 +18,12 @@ export async function googleLogin(req, res) {
     const token = await loginWithGoogle(credential);
     sendSuccess(res, { token });
 }
+
+export const getMe = async (req, res, next) => {
+    try {
+        const user = await getUserById(req.user.userId);
+        return sendSuccess(res, user);
+    } catch (err) {
+        next(err);
+    }
+};

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '../db/db.js';
 import { verifyGoogleToken } from '../config/googleAuth.js';
-import { ConflictError, UnauthorizedError } from '../errors/AppError.js';
+import { ConflictError, UnauthorizedError, NotFoundError } from '../errors/AppError.js';
 
 export async function registerUser({ email, password, name }) {
 
@@ -122,3 +122,12 @@ export async function loginWithGoogle(idToken) {
         throw error;
     }
 }
+
+export const getUserById = async (userId) => {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, name: true, email: true, pfp: true, role: true },
+    });
+    if (!user) throw new NotFoundError('User not found');
+    return user;
+};

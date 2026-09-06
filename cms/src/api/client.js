@@ -26,6 +26,11 @@ export async function login(email, password) {
   return handleResponse(res);
 }
 
+export async function getMe(token) {
+  const res = await fetch(`${API_BASE}/auth/me`, { headers: authHeaders(token) });
+  return handleResponse(res);
+}
+
 export async function getAllPosts(token) {
   const res = await fetch(`${API_BASE}/posts`, { headers: authHeaders(token) });
   return handleResponse(res);
