@@ -78,6 +78,13 @@
   justify-content: center;
   color: var(--bg);
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.navbar__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .navbar__theme-toggle {
