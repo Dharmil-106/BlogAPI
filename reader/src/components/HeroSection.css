@@ -24,6 +24,13 @@
   margin-bottom: var(--space-lg);
 }
 
+.hero__skeleton-tagline {
+  display: block;
+  height: 1em;
+  width: 70%;
+  border-radius: var(--radius-sm);
+}
+
 .hero__links {
   display: flex;
   align-items: center;

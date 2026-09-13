@@ -22,10 +22,12 @@ export default function HeroSection() {
   return (
     <section className="hero" id="hero">
       <h1 className="hero__name">
-        {profile?.name ? profile.name.split(' ')[0] : 'Author'}<span>.</span>
+        {profile?.name ? profile.name.split(' ')[0] : 'Dharmil'}<span>.</span>
       </h1>
       <p className="hero__bio">
-        {profile?.tagline || (loading ? 'Loading profile...' : 'No tagline available.')}
+        {profile?.tagline || (loading
+          ? <span className="hero__skeleton-tagline skeleton" />
+          : 'No tagline available.')}
       </p>
       <div className="hero__links">
         {profile?.githubUrl && (
